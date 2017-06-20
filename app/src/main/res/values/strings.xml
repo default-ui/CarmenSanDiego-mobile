@@ -1,3 +1,8 @@
 <resources>
-    <string name="app_name">CarmenSanDiego-mobile</string>
+    <string name="app_name">Carmen SanDiego</string>
+    <string name="iniciarJuego">Iniciar partida</string>
+    <string name="resolviendo">Resolviendo: </string>
+    <string name="viajar">Viajar</string>
+    <string name="pedirPista">Pedir pista</string>
+    <string name="ordenDeArresto">Orden de arresto</string>
 </resources>

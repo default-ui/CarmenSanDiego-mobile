@@ -18,6 +18,8 @@
         </activity>
         <activity android:name=".ResolverMisterioActivity">
         </activity>
+        <activity android:name=".OrdenDeArrestoActivity">
+        </activity>
 
     </application>
 

@@ -5,4 +5,7 @@
     <string name="viajar">Viajar</string>
     <string name="pedirPista">Pedir pista</string>
     <string name="ordenDeArresto">Orden de arresto</string>
+    <string name="ordenContra">Orden de arresto contra: </string>
+    <string name="emitirOrdenContra">Emitir orden contra: </string>
+    <string name="emitirOrden">Emitir orden de arresto</string>
 </resources>

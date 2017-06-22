@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.unq.tpi.uis.carmensandiego_mobile.model.Villano;
 import com.unq.tpi.uis.carmensandiego_mobile.services.VillanosService;
@@ -66,6 +67,7 @@ public class OrdenDeArrestoActivity extends AppCompatActivity {
         this.villanos = villanos;
         Spinner spinner = (Spinner) findViewById(R.id.spinner2);
         List<String> nombres = getNombres(villanos);
+        nombres.add(0,"-Seleccione un Villano-");
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, nombres);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -93,8 +95,19 @@ public class OrdenDeArrestoActivity extends AppCompatActivity {
     public void emitirOrdenDeArresto(View view){
         Spinner spinner = (Spinner) findViewById(R.id.spinner2);
         String nombre = spinner.getSelectedItem().toString();
-        int idSeleccionado = getIdByName(villanos, nombre);
-        System.out.println(idSeleccionado);
+        if(nombre!="-Seleccione un Villano-") {
+            //Do nothing.
+
+            int idSeleccionado = getIdByName(villanos, nombre);
+            TextView txtView5 = (TextView) findViewById(R.id.textView5);
+            txtView5.setText(nombre);
+            System.out.println(idSeleccionado);
+        }
+    }
+
+    public String obtenerNombreDeOrdenDeArresto(View view){
+        Spinner spinner = (Spinner) findViewById(R.id.spinner2);
+        return spinner.getSelectedItem().toString();
     }
 
 

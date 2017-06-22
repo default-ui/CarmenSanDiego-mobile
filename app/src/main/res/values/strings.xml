@@ -8,4 +8,13 @@
     <string name="ordenContra">Orden de arresto contra: </string>
     <string name="emitirOrdenContra">Emitir orden contra: </string>
     <string name="emitirOrden">Emitir orden de arresto</string>
+
+    <string-array name="villanos">
+        <item>James Moriarty</item>
+        <item>El Cuco</item>
+        <item>El Gato de Springfield</item>
+        <item>Walter White</item>
+        <item>Carmen SanDiego</item>
+    </string-array>
+
 </resources>

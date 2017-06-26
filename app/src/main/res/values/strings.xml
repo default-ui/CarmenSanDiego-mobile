@@ -8,6 +8,8 @@
     <string name="ordenContra">Orden de arresto contra: </string>
     <string name="emitirOrdenContra">Emitir orden contra: </string>
     <string name="emitirOrden">Emitir orden de arresto</string>
+    <string name="destinosTitulo">Destinos recorridos:</string>
+
 
     <string-array name="villanos">
         <item>James Moriarty</item>

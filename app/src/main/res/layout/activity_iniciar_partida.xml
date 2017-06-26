@@ -11,12 +11,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="178dp"
+        android:focusableInTouchMode="false"
+        android:focusedByDefault="false"
         android:onClick="iniciarPartida"
         android:text="@string/iniciarJuego"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
+        tools:focusable="false"
+        tools:focusableInTouchMode="false"
+        tools:focusedByDefault="false"
         tools:layout_constraintBottom_creator="1" />
 
 </android.support.constraint.ConstraintLayout>

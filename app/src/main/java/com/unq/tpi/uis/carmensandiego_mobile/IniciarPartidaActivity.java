@@ -8,6 +8,8 @@ import android.view.View;
 import com.unq.tpi.uis.carmensandiego_mobile.model.EstadoJuego;
 import com.unq.tpi.uis.carmensandiego_mobile.services.VillanosService;
 import android.util.Log;
+import android.widget.Button;
+
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -15,16 +17,25 @@ import retrofit.client.Response;
 
 public class IniciarPartidaActivity extends AppCompatActivity {
 
+    private EstadoJuego estadoJuego;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_iniciar_partida);
-
+        ///////////////////
+        //Solucion provisional porque estoy por matar a alguien. Si comento esto la primera vez que hago click
+        // estadoJuego no se setea y queda null
+        // y no se porque AAAAAAAAAAAAAAHHHHHHHHHHHHHHHHGGGGGGGGGGGG
+        crearNuevaPartida();
+        ////////////////////
     }
 
     public void iniciarPartida(View view){
-        crearNuevaPartida();
-        Intent detailIntent = new Intent(this, ResolverMisterioActivity.class);
+        this.crearNuevaPartida();
+        Intent detailIntent = new Intent(this, ViajarActivity.class);
+        detailIntent.putExtra("EstadoJuego", this.getEstadoJuego());
+        System.out.println(this.getEstadoJuego().getRecorrido().get(0).getNombre());
         startActivity(detailIntent);
     }
 
@@ -45,10 +56,9 @@ public class IniciarPartidaActivity extends AppCompatActivity {
         villanosService.iniciarJuego(new Callback<EstadoJuego>() {
             @Override
             public void success(EstadoJuego partida, Response response) {
-
-                //agregarVillanos(villanos);
+              //  System.out.println(partida);
+                guardarPartida(partida);
             }
-
             @Override
             public void failure(RetrofitError error) {
                 Log.e("", error.getMessage());
@@ -56,6 +66,20 @@ public class IniciarPartidaActivity extends AppCompatActivity {
             }
         });
     }
+
+    public void guardarPartida(EstadoJuego partida) {
+        this.setEstadoJuego(partida);
+        //System.out.println(partida);
+    }
+
+    public EstadoJuego getEstadoJuego() {
+        return estadoJuego;
+    }
+
+    public void setEstadoJuego(EstadoJuego estadoJuego) {
+        this.estadoJuego = estadoJuego;
+    }
+
     }
 
 

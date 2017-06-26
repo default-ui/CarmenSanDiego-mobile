@@ -15,7 +15,7 @@ public class ResolverMisterioActivity extends AppCompatActivity {
 
     }
 
-    public void ordenDeArresto(View view){
+    public void ordenDeArrestooo(View view){
         Intent detailIntent = new Intent(this, OrdenDeArrestoActivity.class);
         startActivity(detailIntent);
     }

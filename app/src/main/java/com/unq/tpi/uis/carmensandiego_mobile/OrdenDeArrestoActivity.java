@@ -1,6 +1,7 @@
 package com.unq.tpi.uis.carmensandiego_mobile;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -9,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.unq.tpi.uis.carmensandiego_mobile.model.EstadoJuego;
 import com.unq.tpi.uis.carmensandiego_mobile.model.Villano;
 import com.unq.tpi.uis.carmensandiego_mobile.services.VillanosService;
 
@@ -25,12 +27,17 @@ public class OrdenDeArrestoActivity extends AppCompatActivity {
     private int idSeleccionado;
     private List<Villano> villanos;
 
+    private EstadoJuego estadoJuego;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        Intent intent = getIntent();
+        this.estadoJuego = (EstadoJuego) intent.getSerializableExtra("EstadoJuego");
         setContentView(R.layout.activity_orden_de_arresto);
         obtenerVillanos();
+        //TODO borrar esto. (villanos siempre es null???)
+        System.out.println(this.villanos);
 
     }
 
@@ -107,6 +114,20 @@ public class OrdenDeArrestoActivity extends AppCompatActivity {
     public String obtenerNombreDeOrdenDeArresto(View view){
         Spinner spinner = (Spinner) findViewById(R.id.spinner2);
         return spinner.getSelectedItem().toString();
+    }
+
+    public void volverAPantallaPrincipal(View view){
+        Intent detailIntent = new Intent(this, ViajarActivity.class);
+        detailIntent.putExtra("EstadoJuego", this.getEstadoJuego());
+        startActivity(detailIntent);
+    }
+
+    public EstadoJuego getEstadoJuego() {
+        return estadoJuego;
+    }
+
+    public void setEstadoJuego(EstadoJuego estadoJuego) {
+        this.estadoJuego = estadoJuego;
     }
 
 

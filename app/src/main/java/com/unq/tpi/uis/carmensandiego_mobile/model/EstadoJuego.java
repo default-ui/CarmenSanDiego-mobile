@@ -1,13 +1,15 @@
 package com.unq.tpi.uis.carmensandiego_mobile.model;
 
 
+import java.io.Serializable;
 import java.util.List;
 
-public class EstadoJuego {
+public class EstadoJuego implements Serializable {
 
     private int id;
     private MiniPais pais;
-  //  private List<MiniPais> recorrido;
+
+    private List<MiniPais> recorrido;
   //  private List<MiniPais> paisesFallidos;
 
     public EstadoJuego(int id, MiniPais pais ){
@@ -30,6 +32,14 @@ public class EstadoJuego {
 
     public void setPais(MiniPais pais) {
         this.pais = pais;
+    }
+
+    public List<MiniPais> getRecorrido() {
+        return recorrido;
+    }
+
+    public void setRecorrido(List<MiniPais> recorrido) {
+        this.recorrido = recorrido;
     }
 
 }

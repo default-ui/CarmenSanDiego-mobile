@@ -10,9 +10,10 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.unq.tpi.uis.carmensandiego_mobile.connection.CarmenSanConnection;
 import com.unq.tpi.uis.carmensandiego_mobile.model.EstadoJuego;
 import com.unq.tpi.uis.carmensandiego_mobile.model.Villano;
-import com.unq.tpi.uis.carmensandiego_mobile.services.VillanosService;
+import com.unq.tpi.uis.carmensandiego_mobile.services.CarmenSanDiegoService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,20 +42,9 @@ public class OrdenDeArrestoActivity extends AppCompatActivity {
 
     }
 
-    private VillanosService createVillanosService() {
-        //MMM código repetido, habría que modificar esto no?
-        String SERVER_IP = "192.168.1.108"; //esta ip se usa para comunicarse con mi localhost en el emulador de Android Studio
-        String SERVER_IP_GENY = "192.168.1.101";//esta ip se usa para comunicarse con mi localhost en el emulador de Genymotion
-        String API_URL = "http://"+ SERVER_IP +":3000";
-
-        RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint(API_URL).build();
-        VillanosService villanosService = restAdapter.create(VillanosService.class);
-        return villanosService;
-    }
-
     private void obtenerVillanos() {
-        VillanosService villanosService = createVillanosService();
-        villanosService.getVillanos(new Callback<List<Villano>>() {
+        CarmenSanDiegoService carmenSanDiegoService = new CarmenSanConnection().getService();
+        carmenSanDiegoService.getVillanos(new Callback<List<Villano>>() {
             @Override
             public void success(List<Villano> villanos, Response response) {
 

@@ -25,9 +25,6 @@ public class ViajarActivity extends AppCompatActivity{
         setContentView(R.layout.activity_viajar);
         setDataJuego();
         ///
-
-
-
     }
 
     public void setDataJuego(){
@@ -41,8 +38,11 @@ public class ViajarActivity extends AppCompatActivity{
         startActivity(detailIntent);
     }
 
-
-
+    public void pedirPistas(View view) {
+        Intent detailIntent = new Intent(this, PedirPistaActivity.class);
+        detailIntent.putExtra("EstadoJuego", this.getEstadoActual());
+        startActivity(detailIntent);
+    }
 
     public EstadoJuego getEstadoActual() {
         return estadoActual;

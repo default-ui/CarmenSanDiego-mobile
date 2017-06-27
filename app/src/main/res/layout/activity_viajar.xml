@@ -104,16 +104,17 @@
         android:layout_marginStart="16dp"
         android:onClick="ordenDeArresto"
         android:text="@string/ordenDeArresto"
-        app:layout_constraintBaseline_toBaselineOf="@+id/viajarButton"
+        app:layout_constraintBaseline_toBaselineOf="@+id/pedirPistaButton"
         app:layout_constraintLeft_toLeftOf="parent"
         tools:layout_constraintBaseline_creator="1"
         tools:layout_constraintLeft_creator="1" />
 
     <Button
-        android:id="@+id/viajarButton"
+        android:id="@+id/pedirPistaButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/pedirPistas"
+        android:onClick="pedirPistas"
         tools:layout_constraintBottom_creator="1"
         android:layout_marginStart="7dp"
         app:layout_constraintBottom_toBottomOf="parent"

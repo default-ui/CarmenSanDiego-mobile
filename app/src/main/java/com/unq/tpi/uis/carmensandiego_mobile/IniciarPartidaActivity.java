@@ -5,17 +5,81 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
+import com.unq.tpi.uis.carmensandiego_mobile.model.EstadoJuego;
+import com.unq.tpi.uis.carmensandiego_mobile.services.VillanosService;
+import android.util.Log;
+import android.widget.Button;
+
+import retrofit.Callback;
+import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
+
 public class IniciarPartidaActivity extends AppCompatActivity {
+
+    private EstadoJuego estadoJuego;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_iniciar_partida);
-
+        ///////////////////
+        //Solucion provisional porque estoy por matar a alguien. Si comento esto la primera vez que hago click
+        // estadoJuego no se setea y queda null
+        // y no se porque AAAAAAAAAAAAAAHHHHHHHHHHHHHHHHGGGGGGGGGGGG
+        crearNuevaPartida();
+        ////////////////////
     }
 
     public void iniciarPartida(View view){
-        Intent detailIntent = new Intent(this, ResolverMisterioActivity.class);
+        this.crearNuevaPartida();
+        Intent detailIntent = new Intent(this, ViajarActivity.class);
+        detailIntent.putExtra("EstadoJuego", this.getEstadoJuego());
+        System.out.println(this.getEstadoJuego().getRecorrido().get(0).getNombre());
         startActivity(detailIntent);
     }
-}
+
+
+    private VillanosService createVillanosService() {
+        //MMM código repetido, habría que modificar esto no?
+        String SERVER_IP = "192.168.1.108"; //esta ip se usa para comunicarse con mi localhost en el emulador de Android Studio
+        String SERVER_IP_GENY = "192.168.1.101";//esta ip se usa para comunicarse con mi localhost en el emulador de Genymotion
+        String API_URL = "http://"+ SERVER_IP +":3000";
+
+        RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint(API_URL).build();
+        VillanosService villanosService = restAdapter.create(VillanosService.class);
+        return villanosService;
+    }
+
+    private void crearNuevaPartida(){
+        VillanosService villanosService = createVillanosService();
+        villanosService.iniciarJuego(new Callback<EstadoJuego>() {
+            @Override
+            public void success(EstadoJuego partida, Response response) {
+              //  System.out.println(partida);
+                guardarPartida(partida);
+            }
+            @Override
+            public void failure(RetrofitError error) {
+                Log.e("", error.getMessage());
+                error.printStackTrace();
+            }
+        });
+    }
+
+    public void guardarPartida(EstadoJuego partida) {
+        this.setEstadoJuego(partida);
+        //System.out.println(partida);
+    }
+
+    public EstadoJuego getEstadoJuego() {
+        return estadoJuego;
+    }
+
+    public void setEstadoJuego(EstadoJuego estadoJuego) {
+        this.estadoJuego = estadoJuego;
+    }
+
+    }
+
+

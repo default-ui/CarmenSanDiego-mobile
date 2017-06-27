@@ -4,10 +4,15 @@
     <string name="resolviendo">Resolviendo: </string>
     <string name="viajar">Viajar</string>
     <string name="pedirPista">Pedir pista</string>
+    <string name="pedirPistas">Pedir pistas</string>
     <string name="ordenDeArresto">Orden de arresto</string>
     <string name="ordenContra">Orden de arresto contra: </string>
     <string name="emitirOrdenContra">Emitir orden contra: </string>
     <string name="emitirOrden">Emitir orden de arresto</string>
+    <string name="destinosTitulo">Destinos recorridos:</string>
+    <string name="estasEn">Estas en: </string>
+    <string name="volver">Volver</string>
+
 
     <string-array name="villanos">
         <item>James Moriarty</item>

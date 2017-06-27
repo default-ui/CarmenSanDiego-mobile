@@ -102,29 +102,17 @@
         android:layout_marginLeft="8dp" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/volverButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/viajar"
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
-        tools:layout_constraintBottom_creator="1"
+        android:onClick="volverAPantallaPrincipal"
+        android:text="@string/volver"
         app:layout_constraintBottom_toBottomOf="parent"
-        tools:layout_constraintLeft_creator="1"
-        android:layout_marginBottom="16dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginLeft="16dp" />
-
-    <Button
-        android:id="@+id/button4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/pedirPista"
-        android:layout_marginStart="33dp"
         tools:layout_constraintBottom_creator="1"
-        app:layout_constraintBottom_toBottomOf="parent"
-        tools:layout_constraintLeft_creator="1"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintLeft_toRightOf="@+id/button2"
-        android:layout_marginLeft="33dp" />
+        tools:layout_constraintLeft_creator="1" />
 
 </android.support.constraint.ConstraintLayout>

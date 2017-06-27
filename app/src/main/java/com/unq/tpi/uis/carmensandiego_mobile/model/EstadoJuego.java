@@ -2,19 +2,23 @@ package com.unq.tpi.uis.carmensandiego_mobile.model;
 
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class EstadoJuego implements Serializable {
 
     private int id;
-    private MiniPais pais;
-
-    private List<MiniPais> recorrido;
+    private MiniPaisConConexiones pais;
+    private String ordenEmitidaPara;
+    private List<MiniPaisConConexiones> recorrido;
   //  private List<MiniPais> paisesFallidos;
 
-    public EstadoJuego(int id, MiniPais pais ){
+    public EstadoJuego(int id, MiniPaisConConexiones pais ){
         this.id = id;
         this.pais = pais;
+        this.ordenEmitidaPara = "No se ha emitido orden aun";
+        this.recorrido = new ArrayList<>();
+        this.recorrido.add(pais);
     }
 
     public int getId() {
@@ -25,21 +29,27 @@ public class EstadoJuego implements Serializable {
         this.id = id;
     }
 
-
-    public MiniPais getPais() {
+    public MiniPaisConConexiones getPais() {
         return pais;
     }
 
-    public void setPais(MiniPais pais) {
+    public void setPais(MiniPaisConConexiones pais) {
         this.pais = pais;
     }
 
-    public List<MiniPais> getRecorrido() {
+    public List<MiniPaisConConexiones> getRecorrido() {
         return recorrido;
     }
 
-    public void setRecorrido(List<MiniPais> recorrido) {
+    public void setRecorrido(List<MiniPaisConConexiones> recorrido) {
         this.recorrido = recorrido;
     }
 
+    public String getOrdenEmitidaPara() {
+        return ordenEmitidaPara;
+    }
+
+    public void setOrdenEmitidaPara(String ordenEmitidaPara) {
+        this.ordenEmitidaPara = ordenEmitidaPara;
+    }
 }

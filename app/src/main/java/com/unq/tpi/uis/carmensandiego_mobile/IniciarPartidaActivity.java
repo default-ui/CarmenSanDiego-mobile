@@ -35,7 +35,7 @@ public class IniciarPartidaActivity extends AppCompatActivity {
         this.crearNuevaPartida();
         Intent detailIntent = new Intent(this, ViajarActivity.class);
         detailIntent.putExtra("EstadoJuego", this.getEstadoJuego());
-        System.out.println(this.getEstadoJuego().getRecorrido().get(0).getNombre());
+        //System.out.println(this.getEstadoJuego().getRecorrido().get(0).getNombre());
         startActivity(detailIntent);
     }
 

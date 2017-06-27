@@ -23,7 +23,7 @@
         android:layout_marginLeft="35dp" />
 
     <ListView
-        android:id="@+id/paisesAViajar"
+        android:id="@+id/list"
         android:layout_width="0dp"
         android:layout_height="212dp"
         tools:layout_constraintTop_creator="1"
@@ -77,24 +77,25 @@
         android:layout_height="wrap_content"
         android:text="@string/ordenContra"
         android:layout_marginStart="16dp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/ordenDeArrestoVillano"
+        app:layout_constraintBaseline_toBaselineOf="@+id/textViewOrden"
         tools:layout_constraintBaseline_creator="1"
         tools:layout_constraintLeft_creator="1"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginLeft="16dp" />
 
     <TextView
-        android:id="@+id/ordenDeArrestoVillano"
+        android:id="@+id/textViewOrden"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
         tools:layout_constraintBottom_creator="1"
-        app:layout_constraintBottom_toTopOf="@+id/viajarButton"
+        app:layout_constraintBottom_toTopOf="@+id/ordenDeArrestoButton"
         android:layout_marginStart="11dp"
         tools:layout_constraintLeft_creator="1"
         android:layout_marginBottom="14dp"
         app:layout_constraintLeft_toRightOf="@+id/ordenDeArrestoTitulo"
         android:layout_marginLeft="11dp" />
+
 
     <Button
         android:id="@+id/ordenDeArrestoButton"
@@ -108,6 +109,14 @@
         app:layout_constraintLeft_toLeftOf="parent"
         tools:layout_constraintBaseline_creator="1"
         tools:layout_constraintLeft_creator="1" />
+
+    <Button
+        android:id="@+id/conexionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        />
 
     <Button
         android:id="@+id/pedirPistaButton"

@@ -92,12 +92,25 @@ public class OrdenDeArrestoActivity extends AppCompatActivity {
         Spinner spinner = (Spinner) findViewById(R.id.spinner2);
         String nombre = spinner.getSelectedItem().toString();
         if(nombre!="-Seleccione un Villano-") {
-            //Do nothing.
 
             int idSeleccionado = getIdByName(villanos, nombre);
             TextView txtView5 = (TextView) findViewById(R.id.textView5);
             txtView5.setText(nombre);
             System.out.println(idSeleccionado);
+            CarmenSanDiegoService carmenSanDiegoService = new CarmenSanConnection().getService();
+            carmenSanDiegoService.getVillano(idSeleccionado, new Callback<Villano>() {
+                @Override
+                public void success(Villano villano, Response response) {
+                    //  System.out.println(partida);
+                    estadoJuego.setOrdenEmitidaPara(villano.getNombre());
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+                    Log.e("", error.getMessage());
+                    error.printStackTrace();
+                }
+            });
         }
     }
 

@@ -1,5 +1,6 @@
 package com.unq.tpi.uis.carmensandiego_mobile.services;
 
+import com.unq.tpi.uis.carmensandiego_mobile.model.EmitirOrdenRequest;
 import com.unq.tpi.uis.carmensandiego_mobile.model.EstadoJuego;
 import com.unq.tpi.uis.carmensandiego_mobile.model.MiniPaisConConexiones;
 import com.unq.tpi.uis.carmensandiego_mobile.model.Pista;
@@ -26,4 +27,7 @@ public interface CarmenSanDiegoService {
 
     @GET("/pais/{id}")
     void getPais(@Path("id") int id, Callback<MiniPaisConConexiones> callback);
+
+    @GET("/villano/{id}")
+    void getVillano(@Path("id") int id, Callback<Villano> callback);
 }

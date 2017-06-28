@@ -24,10 +24,15 @@ public class EmitirOrdenRequest implements Serializable {
     }
 
     private int villanoId;
-    private int casoId;
+    private Integer casoId;
 
     public EmitirOrdenRequest() {
         this.villanoId = 0;
         this.casoId = 0;
+    }
+
+    public EmitirOrdenRequest(int villanoid, Integer casoid) {
+        this.villanoId = villanoid;
+        this.casoId = casoid;
     }
 }

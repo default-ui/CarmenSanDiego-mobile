@@ -8,14 +8,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.unq.tpi.uis.carmensandiego_mobile.connection.CarmenSanConnection;
-import com.unq.tpi.uis.carmensandiego_mobile.model.EmitirOrdenRequest;
 import com.unq.tpi.uis.carmensandiego_mobile.model.EstadoJuego;
 import com.unq.tpi.uis.carmensandiego_mobile.model.MiniPais;
 import com.unq.tpi.uis.carmensandiego_mobile.model.MiniPaisConConexiones;
@@ -117,7 +114,7 @@ public class ViajarActivity extends AppCompatActivity{
         }
 
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
-                R.layout.list_conexion, nombresConexiones);
+                R.layout.list_row, nombresConexiones);
         ListView listView = (ListView) findViewById(R.id.mainListView);
         listView.setAdapter(dataAdapter);
         listView.setTextFilterEnabled(true);
@@ -152,8 +149,7 @@ public class ViajarActivity extends AppCompatActivity{
 
             @Override
             public void failure(RetrofitError error) {
-                Log.e("", error.getMessage());
-                error.printStackTrace();
+                error.getLocalizedMessage();
             }
         });
     }

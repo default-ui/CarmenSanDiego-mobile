@@ -41,6 +41,7 @@ public class IniciarPartidaActivity extends AppCompatActivity {
 
     private void crearNuevaPartida(){
         CarmenSanDiegoService carmenSanDiegoService = new CarmenSanConnection().getService();
+
         carmenSanDiegoService.iniciarJuego(new Callback<EstadoJuego>() {
             @Override
             public void success(EstadoJuego partida, Response response) {
@@ -49,8 +50,9 @@ public class IniciarPartidaActivity extends AppCompatActivity {
             }
             @Override
             public void failure(RetrofitError error) {
-                Log.e("", error.getMessage());
-                error.printStackTrace();
+
+                //Log.e("", error.getMessage());
+                //error.printStackTrace();
             }
         });
     }

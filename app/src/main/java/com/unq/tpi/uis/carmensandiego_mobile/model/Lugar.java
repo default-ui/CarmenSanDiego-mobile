@@ -1,9 +1,9 @@
 package com.unq.tpi.uis.carmensandiego_mobile.model;
 
-public class Pista {
+public class Lugar {
     private String pista;
 
-    public Pista(String pista) {
+    public Lugar(String pista) {
         this.pista = pista;
     }
 

@@ -4,14 +4,14 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.unq.tpi.uis.carmensandiego_mobile.connection.CarmenSanConnection;
 import com.unq.tpi.uis.carmensandiego_mobile.model.EstadoJuego;
-import com.unq.tpi.uis.carmensandiego_mobile.model.MiniPais;
+import com.unq.tpi.uis.carmensandiego_mobile.model.Lugar;
 import com.unq.tpi.uis.carmensandiego_mobile.model.MiniPaisConConexiones;
-import com.unq.tpi.uis.carmensandiego_mobile.model.Pista;
-import com.unq.tpi.uis.carmensandiego_mobile.model.Villano;
 import com.unq.tpi.uis.carmensandiego_mobile.services.CarmenSanDiegoService;
 
 import java.util.List;
@@ -30,25 +30,26 @@ public class PedirPistaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
         this.estadoJuego = (EstadoJuego) intent.getSerializableExtra("EstadoJuego");
-        obtenerPais(this.estadoJuego.getPais().getId());
-        this.generarBotones();
+        obtenerLugares(this.estadoJuego.getPais().getId());
         setContentView(R.layout.activity_pedir_pista);
     }
 
-    private void generarBotones() {
-        List<MiniPais> conexiones = paisActual.getConexiones();
-        ((TextView) findViewById(R.id.lugar1)).setText(String.valueOf(conexiones.get(0).getNombre()));
-        ((TextView) findViewById(R.id.lugar2)).setText(String.valueOf(conexiones.get(1).getNombre()));
-        ((TextView) findViewById(R.id.lugar3)).setText(String.valueOf(conexiones.get(2).getNombre()));
+    private void generarBotones(MiniPaisConConexiones paisConConexiones) {
+        List<String> lugares = paisConConexiones.getLugares();
+        ((TextView) findViewById(R.id.lugar1)).setText(String.valueOf(lugares.get(0)));
+        ((TextView) findViewById(R.id.lugar2)).setText(String.valueOf(lugares.get(1)));
+        ((TextView) findViewById(R.id.lugar3)).setText(String.valueOf(lugares.get(2)));
     }
 
-    private void obtenerPista() {
+    public void obtenerPista(View view) {
         CarmenSanDiegoService carmenSanDiegoService = new CarmenSanConnection().getService();
-        carmenSanDiegoService.getPista(new Callback<Pista>() {
+        String lugar = String.valueOf(((Button) view).getText());
+        int idCaso = this.estadoJuego.getId();
+        carmenSanDiegoService.getPista(idCaso, lugar, new Callback<Lugar>() {
 
             @Override
-            public void success(Pista pista, Response response) {
-                mostrarPista(pista);
+            public void success(Lugar lugar, Response response) {
+                mostrarPista(lugar);
             }
 
             @Override
@@ -59,13 +60,13 @@ public class PedirPistaActivity extends AppCompatActivity {
         });
     }
 
-    private void obtenerPais(int idPais) {
+    private void obtenerLugares(int idPais) {
         CarmenSanDiegoService carmenSanDiegoService = new CarmenSanConnection().getService();
         carmenSanDiegoService.getPais(idPais, new Callback<MiniPaisConConexiones>() {
 
             @Override
             public void success(MiniPaisConConexiones miniPaisConConexiones, Response response) {
-                paisActual = miniPaisConConexiones;
+                generarBotones(miniPaisConConexiones);
             }
 
             @Override
@@ -76,7 +77,7 @@ public class PedirPistaActivity extends AppCompatActivity {
         });
     }
 
-    private void mostrarPista(Pista pista) {
-        ((TextView) findViewById(R.id.pistaActual)).setText(String.valueOf(pista.getPista()));
+    private void mostrarPista(Lugar lugar) {
+        ((TextView) findViewById(R.id.pistaActual)).setText(String.valueOf(lugar.getPista()));
     }
 }

@@ -3,7 +3,7 @@
     <string name="iniciarJuego">Iniciar partida</string>
     <string name="resolviendo">Resolviendo: </string>
     <string name="viajar">Viajar</string>
-    <string name="pedirPista">Pedir pista</string>
+    <string name="pedirPista">Pedir lugar</string>
     <string name="pedirPistas">Pedir pistas</string>
     <string name="ordenDeArresto">Orden de arresto</string>
     <string name="ordenContra">Orden de arresto contra: </string>
@@ -12,6 +12,8 @@
     <string name="destinosTitulo">Destinos recorridos:</string>
     <string name="estasEn">Estas en: </string>
     <string name="volver">Volver</string>
+    <string name="pista_actual">Pista actual:</string>
+    <string name="pedir_pista">Pedir lugar</string>
 
 
     <string-array name="villanos">

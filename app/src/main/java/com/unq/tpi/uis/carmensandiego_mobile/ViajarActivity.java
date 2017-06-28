@@ -27,7 +27,7 @@ import retrofit.client.Response;
 public class ViajarActivity extends AppCompatActivity{
 
 
-    private EstadoJuego estadoActual;
+    private EstadoJuego estadoJuego;
     private ConexionListAdapter adapter;
     private ListView list;
 
@@ -37,8 +37,8 @@ public class ViajarActivity extends AppCompatActivity{
         //
         Intent intent = getIntent();
         EstadoJuego estadoAct = (EstadoJuego) intent.getSerializableExtra("EstadoJuego");
-        System.out.println(estadoActual);
-        setEstadoActual(estadoAct);
+        System.out.println(estadoJuego);
+        setEstadoJuego(estadoAct);
         setContentView(R.layout.activity_viajar);
         setDataJuego();
         //traerConexionesDePais();
@@ -47,35 +47,35 @@ public class ViajarActivity extends AppCompatActivity{
     }
 
     public void setDataJuego(){
-        ((TextView) findViewById(R.id.paisActual)).setText(String.valueOf(estadoActual.getPais().getNombre()));
+        ((TextView) findViewById(R.id.paisActual)).setText(String.valueOf(estadoJuego.getPais().getNombre()));
         TextView txtViewOrden = (TextView) findViewById(R.id.textViewOrden);
-        txtViewOrden.setText(estadoActual.getOrdenEmitidaPara());
+        txtViewOrden.setText(estadoJuego.getOrdenEmitidaPara());
 
     }
 
     public void ordenDeArresto(View view){
         Intent detailIntent = new Intent(this, OrdenDeArrestoActivity.class);
-        detailIntent.putExtra("EstadoJuego", this.getEstadoActual());
+        detailIntent.putExtra("EstadoJuego", this.getEstadoJuego());
         startActivity(detailIntent);
     }
 
     public void pedirPistas(View view) {
         Intent detailIntent = new Intent(this, PedirPistaActivity.class);
-        detailIntent.putExtra("EstadoJuego", this.getEstadoActual());
+        detailIntent.putExtra("EstadoJuego", this.getEstadoJuego());
         startActivity(detailIntent);
     }
 
-    public EstadoJuego getEstadoActual() {
-        return estadoActual;
+    public EstadoJuego getEstadoJuego() {
+        return estadoJuego;
     }
 
-    public void setEstadoActual(EstadoJuego estadoActual) {
-        this.estadoActual = estadoActual;
+    public void setEstadoJuego(EstadoJuego estadoJuego) {
+        this.estadoJuego = estadoJuego;
     }
 
     private void traerConexionesDePais(){
         CarmenSanDiegoService carmenSanDiegoService = new CarmenSanConnection().getService();
-        carmenSanDiegoService.getPais(this.getEstadoActual().getPais().getId(), new Callback<MiniPaisConConexiones>() {
+        carmenSanDiegoService.getPais(this.getEstadoJuego().getPais().getId(), new Callback<MiniPaisConConexiones>() {
             @Override
             public void success(MiniPaisConConexiones paisConConexiones, Response response) {
                 mostrarConexiones(paisConConexiones);
@@ -102,6 +102,12 @@ public class ViajarActivity extends AppCompatActivity{
         adapter = new ConexionListAdapter(this, botonesConexiones);
         list.setAdapter((ListAdapter) adapter);
 
+    }
+
+    public void volverAPantallaPrincipal(View view) {
+        Intent detailIntent = new Intent(this, ViajarActivity.class);
+        detailIntent.putExtra("EstadoJuego", this.getEstadoJuego());
+        startActivity(detailIntent);
     }
 
 }

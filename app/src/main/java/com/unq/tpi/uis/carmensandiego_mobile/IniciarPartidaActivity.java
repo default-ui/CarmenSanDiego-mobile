@@ -26,7 +26,6 @@ public class IniciarPartidaActivity extends AppCompatActivity {
         ///////////////////
         //Solucion provisional porque estoy por matar a alguien. Si comento esto la primera vez que hago click
         // estadoJuego no se setea y queda null
-        // y no se porque AAAAAAAAAAAAAAHHHHHHHHHHHHHHHHGGGGGGGGGGGG
         crearNuevaPartida();
         ////////////////////
     }
@@ -35,7 +34,6 @@ public class IniciarPartidaActivity extends AppCompatActivity {
         this.crearNuevaPartida();
         Intent detailIntent = new Intent(this, ViajarActivity.class);
         detailIntent.putExtra("EstadoJuego", this.getEstadoJuego());
-        detailIntent.putExtra("CasoID", this.getEstadoJuego().getId());
         startActivity(detailIntent);
     }
 
@@ -45,7 +43,6 @@ public class IniciarPartidaActivity extends AppCompatActivity {
         carmenSanDiegoService.iniciarJuego(new Callback<EstadoJuego>() {
             @Override
             public void success(EstadoJuego partida, Response response) {
-              //  System.out.println(partida);
                 guardarPartida(partida);
             }
             @Override

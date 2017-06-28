@@ -80,4 +80,20 @@ public class PedirPistaActivity extends AppCompatActivity {
     private void mostrarPista(Lugar lugar) {
         ((TextView) findViewById(R.id.pistaActual)).setText(String.valueOf(lugar.getPista()));
     }
+
+    public void volverAPantallaPrincipal(View view){
+       // Intent actualIntent =
+        Intent detailIntent = new Intent(this, ViajarActivity.class);
+        detailIntent.putExtra("EstadoJuego", this.getEstadoJuego());
+        detailIntent.putExtra("OrdenPara", getIntent().getSerializableExtra("OrdenPara"));
+        startActivity(detailIntent);
+    }
+
+    public EstadoJuego getEstadoJuego() {
+        return estadoJuego;
+    }
+
+    public void setEstadoJuego(EstadoJuego estadoJuego) {
+        this.estadoJuego = estadoJuego;
+    }
 }

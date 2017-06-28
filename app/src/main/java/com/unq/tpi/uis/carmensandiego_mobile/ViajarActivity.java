@@ -32,24 +32,16 @@ public class ViajarActivity extends AppCompatActivity{
     private EstadoJuego estadoJuego;
     private ListView list;
     private List<MiniPais> conexiones;
-    private Integer casoId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //
         Intent intent = getIntent();
-        int id = (int) intent.getSerializableExtra("CasoID");
-        this.casoId = new Integer(id);
         EstadoJuego estadoAct = (EstadoJuego) intent.getSerializableExtra("EstadoJuego");
         setEstadoJuego(estadoAct);
         setContentView(R.layout.activity_viajar);
         setDataJuego();
         traerConexionesDePais();
-
-        //traerConexionesDePais();
-
-        ///
     }
 
 
@@ -57,7 +49,7 @@ public class ViajarActivity extends AppCompatActivity{
     public void setDataJuego(){
         ((TextView) findViewById(R.id.paisActual)).setText(String.valueOf(estadoJuego.getPais().getNombre()));
         TextView txtViewOrden = (TextView) findViewById(R.id.textViewOrden);
-        txtViewOrden.setText("Iupi!");
+        txtViewOrden.setText(getOrdenPara());
         ((TextView) findViewById(R.id.destinosRecorridos)).setText(obtenerRecorrido(estadoJuego.getRecorrido()));
 
     }
@@ -72,14 +64,25 @@ public class ViajarActivity extends AppCompatActivity{
 
     public void ordenDeArresto(View view){
         Intent detailIntent = new Intent(this, OrdenDeArrestoActivity.class);
-        detailIntent.putExtra("CasoID", this.getEstadoJuego().getId());
         detailIntent.putExtra("EstadoJuego", this.getEstadoJuego());
         startActivity(detailIntent);
     }
 
+    public String getOrdenPara(){
+        String ordenRes = "";
+        Intent intent = getIntent();
+        if(intent.getSerializableExtra("OrdenPara") != null) {
+            ordenRes = intent.getSerializableExtra("OrdenPara").toString();
+        }
+        return ordenRes;
+
+    }
+
     public void pedirPistas(View view) {
+        TextView orden = (TextView) findViewById(R.id.textViewOrden);
         Intent detailIntent = new Intent(this, PedirPistaActivity.class);
         detailIntent.putExtra("EstadoJuego", this.getEstadoJuego());
+        detailIntent.putExtra("OrdenPara", orden.getText());
         startActivity(detailIntent);
     }
 
@@ -136,11 +139,11 @@ public class ViajarActivity extends AppCompatActivity{
             }
         }
         CarmenSanDiegoService carmenSanDiegoService = new CarmenSanConnection().getService();
-        ViajarRequest vi = new ViajarRequest(destinoId, casoId);
+        ViajarRequest vi = new ViajarRequest(destinoId, estadoJuego.getId());
         carmenSanDiegoService.viajar(vi, new Callback<EstadoJuego>() {
             @Override
             public void success(EstadoJuego partida, Response response) {
-                System.out.println(partida.getPais().getNombre());
+              //  System.out.println(partida.getPais().getNombre());
                 setEstadoJuego(partida);
                 setContentView(R.layout.activity_viajar);
                 setDataJuego();
@@ -154,14 +157,14 @@ public class ViajarActivity extends AppCompatActivity{
         });
     }
 
-
+/*
     public void volverAPantallaPrincipal(View view) {
         Intent detailIntent = new Intent(this, ViajarActivity.class);
         detailIntent.putExtra("EstadoJuego", this.getEstadoJuego());
         startActivity(detailIntent);
     }
 
-
+*/
 
 
 

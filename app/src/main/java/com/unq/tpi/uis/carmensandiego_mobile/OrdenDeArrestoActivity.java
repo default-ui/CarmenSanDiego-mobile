@@ -26,22 +26,17 @@ import retrofit.client.Response;
 
 public class OrdenDeArrestoActivity extends AppCompatActivity {
 
-    private int idSeleccionado;
+    private String villanoSeleccionado;
     private List<Villano> villanos;
-    private Integer idCaso;
     private EstadoJuego estadoJuego;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
-        int id = (int) intent.getSerializableExtra("CasoID");
-        this.idCaso = new Integer(id);
         this.estadoJuego = (EstadoJuego) intent.getSerializableExtra("EstadoJuego");
         setContentView(R.layout.activity_orden_de_arresto);
         obtenerVillanos();
-        //TODO borrar esto. (villanos siempre es null???)
-        System.out.println(this.villanos);
 
     }
 
@@ -96,11 +91,11 @@ public class OrdenDeArrestoActivity extends AppCompatActivity {
         String nombre = spinner.getSelectedItem().toString();
         if(nombre!="-Seleccione un Villano-") {
             Integer idSeleccionado = getIdByName(villanos, nombre);
-            String str = idSeleccionado.toString();
             TextView txtView5 = (TextView) findViewById(R.id.textView5);
             txtView5.setText(nombre);
             CarmenSanDiegoService carmenSanDiegoService = new CarmenSanConnection().getService();
-            EmitirOrdenRequest vi = new EmitirOrdenRequest(idSeleccionado, idCaso);
+            this.villanoSeleccionado = nombre;
+            EmitirOrdenRequest vi = new EmitirOrdenRequest(idSeleccionado, estadoJuego.getId());
             carmenSanDiegoService.emitirOrdenPara(vi, new Callback<EmitirOrdenRequest>() {
                 @Override
                 public void success(EmitirOrdenRequest villano, Response response) {
@@ -123,6 +118,7 @@ public class OrdenDeArrestoActivity extends AppCompatActivity {
     public void volverAPantallaPrincipal(View view){
         Intent detailIntent = new Intent(this, ViajarActivity.class);
         detailIntent.putExtra("EstadoJuego", this.getEstadoJuego());
+        detailIntent.putExtra("OrdenPara", this.villanoSeleccionado);
         startActivity(detailIntent);
     }
 

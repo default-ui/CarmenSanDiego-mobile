@@ -6,16 +6,20 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.unq.tpi.uis.carmensandiego_mobile.connection.CarmenSanConnection;
+import com.unq.tpi.uis.carmensandiego_mobile.model.EmitirOrdenRequest;
 import com.unq.tpi.uis.carmensandiego_mobile.model.EstadoJuego;
 import com.unq.tpi.uis.carmensandiego_mobile.model.MiniPais;
 import com.unq.tpi.uis.carmensandiego_mobile.model.MiniPaisConConexiones;
+import com.unq.tpi.uis.carmensandiego_mobile.model.ViajarRequest;
 import com.unq.tpi.uis.carmensandiego_mobile.services.CarmenSanDiegoService;
 
 import java.util.ArrayList;
@@ -29,23 +33,29 @@ public class ViajarActivity extends AppCompatActivity{
 
 
     private EstadoJuego estadoJuego;
-    private ConexionListAdapter adapter;
     private ListView list;
+    private List<MiniPais> conexiones;
+    private Integer idCaso;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //
         Intent intent = getIntent();
+        int id = (int) intent.getSerializableExtra("CasoID");
+        this.idCaso = new Integer(id);
         EstadoJuego estadoAct = (EstadoJuego) intent.getSerializableExtra("EstadoJuego");
-        System.out.println(estadoJuego);
         setEstadoJuego(estadoAct);
         setContentView(R.layout.activity_viajar);
         setDataJuego();
+        traerConexionesDePais();
+
         //traerConexionesDePais();
 
         ///
     }
+
+
 
     public void setDataJuego(){
         ((TextView) findViewById(R.id.paisActual)).setText(String.valueOf(estadoJuego.getPais().getNombre()));
@@ -91,22 +101,51 @@ public class ViajarActivity extends AppCompatActivity{
     }
 
     public void mostrarConexiones(MiniPaisConConexiones paisConConexiones){
-        List<String> conexionesNombres = paisConConexiones.getConexiones();
-        setListAdapter(new ArrayAdapter<String>(this, R.layout.list_conexion,conexiones));
+        List<String> nombresConexiones = new ArrayList<>();
+        conexiones = paisConConexiones.getConexiones();
+        for (MiniPais p : conexiones){
+            nombresConexiones.add(p.getNombre());
+        }
 
-        ListView listView = getListView();
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
+                R.layout.list_conexion, nombresConexiones);
+        ListView listView = (ListView) findViewById(R.id.mainListView);
+        listView.setAdapter(dataAdapter);
         listView.setTextFilterEnabled(true);
-
-        listView.setOnItemClickListener(new OnItemClickListener() {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
                 // When clicked, show a toast with the TextView text
-                Toast.makeText(getApplicationContext(),
-                        ((TextView) view).getText(), Toast.LENGTH_SHORT).show();
+                viajar(((TextView) view).getText().toString());
             }
         });
 
     }
+
+    private void viajar(String text) {
+        int destinoId = 0;
+        for (MiniPais p : conexiones){
+            if (p.getNombre()==text){
+                destinoId = p.getId();
+            }
+        }
+        CarmenSanDiegoService carmenSanDiegoService = new CarmenSanConnection().getService();
+        ViajarRequest vi = new ViajarRequest(destinoId, idCaso);
+        carmenSanDiegoService.viajar(vi, new Callback<ViajarRequest>() {
+            @Override
+            public void success(ViajarRequest vi, Response response) {
+                finish();
+                startActivity(getIntent());
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.e("", error.getMessage());
+                error.printStackTrace();
+            }
+        });
+    }
+
 
     public void volverAPantallaPrincipal(View view) {
         Intent detailIntent = new Intent(this, ViajarActivity.class);

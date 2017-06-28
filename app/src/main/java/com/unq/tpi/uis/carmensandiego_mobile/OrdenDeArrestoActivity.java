@@ -101,7 +101,6 @@ public class OrdenDeArrestoActivity extends AppCompatActivity {
             txtView5.setText(nombre);
             CarmenSanDiegoService carmenSanDiegoService = new CarmenSanConnection().getService();
             EmitirOrdenRequest vi = new EmitirOrdenRequest(idSeleccionado, idCaso);
-            System.out.println(estadoJuego.getId());
             carmenSanDiegoService.emitirOrdenPara(vi, new Callback<EmitirOrdenRequest>() {
                 @Override
                 public void success(EmitirOrdenRequest villano, Response response) {

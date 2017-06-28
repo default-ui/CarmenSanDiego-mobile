@@ -4,6 +4,7 @@ import com.unq.tpi.uis.carmensandiego_mobile.model.EmitirOrdenRequest;
 import com.unq.tpi.uis.carmensandiego_mobile.model.EstadoJuego;
 import com.unq.tpi.uis.carmensandiego_mobile.model.MiniPaisConConexiones;
 import com.unq.tpi.uis.carmensandiego_mobile.model.Lugar;
+import com.unq.tpi.uis.carmensandiego_mobile.model.ViajarRequest;
 import com.unq.tpi.uis.carmensandiego_mobile.model.Villano;
 
 import java.util.List;
@@ -39,4 +40,7 @@ public interface CarmenSanDiegoService {
 
     @POST("/emitirOrdenPara")
     void emitirOrdenPara(@Body EmitirOrdenRequest villano, Callback<EmitirOrdenRequest> callback);
+
+    @POST("/viajar")
+    void viajar(@Body ViajarRequest viaje, Callback<ViajarRequest> callback);
 }

@@ -11,6 +11,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.unq.tpi.uis.carmensandiego_mobile.connection.CarmenSanConnection;
+import com.unq.tpi.uis.carmensandiego_mobile.model.EmitirOrdenRequest;
 import com.unq.tpi.uis.carmensandiego_mobile.model.EstadoJuego;
 import com.unq.tpi.uis.carmensandiego_mobile.model.Villano;
 import com.unq.tpi.uis.carmensandiego_mobile.services.CarmenSanDiegoService;
@@ -27,13 +28,15 @@ public class OrdenDeArrestoActivity extends AppCompatActivity {
 
     private int idSeleccionado;
     private List<Villano> villanos;
-
+    private Integer idCaso;
     private EstadoJuego estadoJuego;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
+        int id = (int) intent.getSerializableExtra("CasoID");
+        this.idCaso = new Integer(id);
         this.estadoJuego = (EstadoJuego) intent.getSerializableExtra("EstadoJuego");
         setContentView(R.layout.activity_orden_de_arresto);
         obtenerVillanos();
@@ -92,17 +95,16 @@ public class OrdenDeArrestoActivity extends AppCompatActivity {
         Spinner spinner = (Spinner) findViewById(R.id.spinner2);
         String nombre = spinner.getSelectedItem().toString();
         if(nombre!="-Seleccione un Villano-") {
-
-            int idSeleccionado = getIdByName(villanos, nombre);
+            Integer idSeleccionado = getIdByName(villanos, nombre);
+            String str = idSeleccionado.toString();
             TextView txtView5 = (TextView) findViewById(R.id.textView5);
             txtView5.setText(nombre);
-            System.out.println(idSeleccionado);
             CarmenSanDiegoService carmenSanDiegoService = new CarmenSanConnection().getService();
-            carmenSanDiegoService.getVillano(idSeleccionado, new Callback<Villano>() {
+            EmitirOrdenRequest vi = new EmitirOrdenRequest(idSeleccionado, idCaso);
+            System.out.println(estadoJuego.getId());
+            carmenSanDiegoService.emitirOrdenPara(vi, new Callback<EmitirOrdenRequest>() {
                 @Override
-                public void success(Villano villano, Response response) {
-                    //  System.out.println(partida);
-                    estadoJuego.setOrdenEmitidaPara(villano.getNombre());
+                public void success(EmitirOrdenRequest villano, Response response) {
                 }
 
                 @Override

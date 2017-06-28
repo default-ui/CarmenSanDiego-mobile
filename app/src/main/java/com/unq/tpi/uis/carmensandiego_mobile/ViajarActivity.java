@@ -55,6 +55,7 @@ public class ViajarActivity extends AppCompatActivity{
 
     public void ordenDeArresto(View view){
         Intent detailIntent = new Intent(this, OrdenDeArrestoActivity.class);
+        detailIntent.putExtra("CasoID", this.getEstadoJuego().getId());
         detailIntent.putExtra("EstadoJuego", this.getEstadoJuego());
         startActivity(detailIntent);
     }

@@ -17,8 +17,7 @@ public class EstadoJuego implements Serializable {
         this.id = id;
         this.pais = pais;
         this.ordenEmitidaPara = "No se ha emitido orden aun";
-        this.recorrido = new ArrayList<>();
-        this.recorrido.add(pais);
+
     }
 
     public int getId() {

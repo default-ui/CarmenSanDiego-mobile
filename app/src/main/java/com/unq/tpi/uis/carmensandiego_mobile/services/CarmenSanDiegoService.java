@@ -42,5 +42,5 @@ public interface CarmenSanDiegoService {
     void emitirOrdenPara(@Body EmitirOrdenRequest villano, Callback<EmitirOrdenRequest> callback);
 
     @POST("/viajar")
-    void viajar(@Body ViajarRequest viaje, Callback<ViajarRequest> callback);
+    void viajar(@Body ViajarRequest viaje, Callback<EstadoJuego> callback);
 }

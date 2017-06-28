@@ -35,7 +35,7 @@ public class ViajarActivity extends AppCompatActivity{
     private EstadoJuego estadoJuego;
     private ListView list;
     private List<MiniPais> conexiones;
-    private Integer idCaso;
+    private Integer casoId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +43,7 @@ public class ViajarActivity extends AppCompatActivity{
         //
         Intent intent = getIntent();
         int id = (int) intent.getSerializableExtra("CasoID");
-        this.idCaso = new Integer(id);
+        this.casoId = new Integer(id);
         EstadoJuego estadoAct = (EstadoJuego) intent.getSerializableExtra("EstadoJuego");
         setEstadoJuego(estadoAct);
         setContentView(R.layout.activity_viajar);
@@ -60,8 +60,17 @@ public class ViajarActivity extends AppCompatActivity{
     public void setDataJuego(){
         ((TextView) findViewById(R.id.paisActual)).setText(String.valueOf(estadoJuego.getPais().getNombre()));
         TextView txtViewOrden = (TextView) findViewById(R.id.textViewOrden);
-        txtViewOrden.setText(estadoJuego.getOrdenEmitidaPara());
+        txtViewOrden.setText("Iupi!");
+        ((TextView) findViewById(R.id.destinosRecorridos)).setText(obtenerRecorrido(estadoJuego.getRecorrido()));
 
+    }
+
+    private String obtenerRecorrido(List<MiniPaisConConexiones> recorrido) {
+        String rec = "";
+        for (MiniPaisConConexiones p : recorrido){
+            rec = rec+">> "+p.getNombre()+" ";
+        }
+        return rec;
     }
 
     public void ordenDeArresto(View view){
@@ -130,12 +139,15 @@ public class ViajarActivity extends AppCompatActivity{
             }
         }
         CarmenSanDiegoService carmenSanDiegoService = new CarmenSanConnection().getService();
-        ViajarRequest vi = new ViajarRequest(destinoId, idCaso);
-        carmenSanDiegoService.viajar(vi, new Callback<ViajarRequest>() {
+        ViajarRequest vi = new ViajarRequest(destinoId, casoId);
+        carmenSanDiegoService.viajar(vi, new Callback<EstadoJuego>() {
             @Override
-            public void success(ViajarRequest vi, Response response) {
-                finish();
-                startActivity(getIntent());
+            public void success(EstadoJuego partida, Response response) {
+                System.out.println(partida.getPais().getNombre());
+                setEstadoJuego(partida);
+                setContentView(R.layout.activity_viajar);
+                setDataJuego();
+                traerConexionesDePais();
             }
 
             @Override
@@ -152,5 +164,9 @@ public class ViajarActivity extends AppCompatActivity{
         detailIntent.putExtra("EstadoJuego", this.getEstadoJuego());
         startActivity(detailIntent);
     }
+
+
+
+
 
 }

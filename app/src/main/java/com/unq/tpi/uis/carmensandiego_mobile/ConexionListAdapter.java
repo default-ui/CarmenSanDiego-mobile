@@ -1,44 +1,27 @@
 package com.unq.tpi.uis.carmensandiego_mobile;
 
-import android.app.Activity;
-import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.BaseAdapter;
+import android.widget.TextView;
 
-import java.util.List;
+private class ConexionListAdapter extends BaseAdapter {
+    private View layoutInflater;
 
-/**
- * Created by lalopsb on 27/06/2017.
- */
+    // override other abstract methods here
 
-public class ConexionListAdapter {
-    private Activity activity;
-    private List<Button> listButtons;
+    @Override
+    public View getView(int position, View convertView, ViewGroup container) {
+        if (convertView == null) {
+            convertView = getLayoutInflater().inflate(R.layout.list_item, container, false);
+        }
 
-
-    public ConexionListAdapter(Activity activity, List<Button> listButtons){
-        this.activity = activity;
-        this.listButtons = listButtons;
+        ((TextView) convertView.findViewById(android.R.id.text1))
+                .setText(getItem(position));
+        return convertView;
     }
 
-    public int getCount() {
-        return listButtons.size();
+    public View getLayoutInflater() {
+        return layoutInflater;
     }
-
-    public Object getItem(int position) {
-        return listButtons.get(position);
-    }
-
-    public long getItemId(int position) {
-        return position;
-    }
-
-    public View getView(int position, View convertView, ViewGroup parent) {
-
-        Button button = new Button(activity, (AttributeSet) listButtons.get(position));
-
-        return button;
-    }
-
 }

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -89,18 +90,20 @@ public class ViajarActivity extends AppCompatActivity{
     }
 
     public void mostrarConexiones(MiniPaisConConexiones paisConConexiones){
-        list = (ListView) findViewById(R.id.list);
-        List<MiniPais> conexiones = paisConConexiones.getConexiones();
-        List<Button> botonesConexiones = new ArrayList<Button>();
+        List<String> conexionesNombres = paisConConexiones.getConexiones();
+        setListAdapter(new ArrayAdapter<String>(this, R.layout.list_conexion,conexiones));
 
-        for (int i=0; i<conexiones.size() ; i++){
+        ListView listView = getListView();
+        listView.setTextFilterEnabled(true);
 
-            botonesConexiones.add((Button)findViewById(R.id.conexionButton));
-            botonesConexiones.get(i).setText(conexiones.get(i).getNombre());
-            System.out.println(conexiones.get(i).getNombre());
-        }
-        adapter = new ConexionListAdapter(this, botonesConexiones);
-        list.setAdapter((ListAdapter) adapter);
+        listView.setOnItemClickListener(new OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                // When clicked, show a toast with the TextView text
+                Toast.makeText(getApplicationContext(),
+                        ((TextView) view).getText(), Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 
